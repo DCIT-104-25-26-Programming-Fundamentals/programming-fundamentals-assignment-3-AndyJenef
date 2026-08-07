@@ -75,3 +75,135 @@
 // =============================================================================
 
 
+
+function add(a, b) {
+  return a + b;
+}
+ 
+function subtract(a, b) {
+  return a - b;
+}
+ 
+function multiply(a, b) {
+  return a * b;
+}
+ 
+function divide(a, b) {
+  if (b === 0) {
+    return null;
+  }
+  return a / b;
+}
+ 
+function modulus(a, b) {
+  if (b === 0) {
+    return null;
+  }
+  return a % b;
+}
+ 
+function power(a, b) {
+  return a ** b;
+}
+ 
+// -----------------------------------------------------------------------------
+// Menu display
+// -----------------------------------------------------------------------------
+ 
+function printMenu() {
+  console.log("\n============================");
+  console.log("     SIMPLE CALCULATOR");
+  console.log("============================");
+  console.log("1. Addition");
+  console.log("2. Subtraction");
+  console.log("3. Multiplication");
+  console.log("4. Division");
+  console.log("5. Modulus");
+  console.log("6. Exponentiation");
+  console.log("7. Quit");
+}
+ 
+// -----------------------------------------------------------------------------
+// Helpers
+// -----------------------------------------------------------------------------
+ 
+function readNumber(promptText) {
+  const value = Number(readlineSync.question(promptText));
+ 
+  if (Number.isNaN(value)) {
+    return null;
+  }
+ 
+  return value;
+}
+ 
+const symbols = {
+  1: "+",
+  2: "-",
+  3: "*",
+  4: "/",
+  5: "%",
+  6: "**",
+};
+ 
+function performOperation(choice, a, b) {
+  switch (choice) {
+    case "1":
+      return add(a, b);
+    case "2":
+      return subtract(a, b);
+    case "3":
+      return multiply(a, b);
+    case "4":
+      return divide(a, b);
+    case "5":
+      return modulus(a, b);
+    case "6":
+      return power(a, b);
+    default:
+      return undefined;
+  }
+}
+ 
+// -----------------------------------------------------------------------------
+// Main menu loop
+// -----------------------------------------------------------------------------
+ 
+function main() {
+  let running = true;
+ 
+  while (running) {
+    printMenu();
+    const choice = readlineSync.question("Select an operation (1-7): ").trim();
+ 
+    if (choice === "7") {
+      console.log("Goodbye!");
+      running = false;
+      continue;
+    }
+ 
+    if (!["1", "2", "3", "4", "5", "6"].includes(choice)) {
+      console.log("Error: Please enter a number between 1 and 7.");
+      continue;
+    }
+ 
+    const a = readNumber("Enter first number : ");
+    const b = readNumber("Enter second number: ");
+ 
+    if (a === null || b === null) {
+      console.log("Error: Please enter valid numbers.");
+      continue;
+    }
+ 
+    const result = performOperation(choice, a, b);
+ 
+    if (result === null) {
+      console.log("Error: Cannot divide by zero.");
+      continue;
+    }
+ 
+    console.log(`Result: ${a} ${symbols[choice]} ${b} = ${result.toFixed(2)}`);
+  }
+}
+ 
+main();
