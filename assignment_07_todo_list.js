@@ -82,3 +82,103 @@
 // =============================================================================
 
 
+
+let tasks = [];
+ 
+// -----------------------------------------------------------------------------
+// Menu display
+// -----------------------------------------------------------------------------
+ 
+function printMenu() {
+  console.log("\n============================");
+  console.log("     TO-DO LIST MENU");
+  console.log("============================");
+  console.log("1. Add task");
+  console.log("2. View tasks");
+  console.log("3. Delete task");
+  console.log("4. Quit");
+}
+ 
+// -----------------------------------------------------------------------------
+// Feature 1 — Add a task
+// -----------------------------------------------------------------------------
+ 
+function addTask() {
+  const description = readlineSync.question("Enter task: ").trim();
+ 
+  if (description === "") {
+    console.log("Error: Task description cannot be empty.");
+    return;
+  }
+ 
+  tasks.push(description);
+  console.log(`Task added: "${description}"`);
+}
+ 
+// -----------------------------------------------------------------------------
+// Feature 2 — View all tasks
+// -----------------------------------------------------------------------------
+ 
+function viewTasks() {
+  if (tasks.length === 0) {
+    console.log("Your task list is empty.");
+    return;
+  }
+ 
+  console.log("Your Tasks:");
+  for (let i = 0; i < tasks.length; i++) {
+    console.log(`${i + 1}. ${tasks[i]}`);
+  }
+}
+ 
+// -----------------------------------------------------------------------------
+// Feature 3 — Delete a task
+// -----------------------------------------------------------------------------
+ 
+function deleteTask() {
+  if (tasks.length === 0) {
+    console.log("Your task list is empty. Nothing to delete.");
+    return;
+  }
+ 
+  viewTasks();
+  const taskNumber = Number(readlineSync.question("Enter task number to delete: "));
+  const index = taskNumber - 1;
+ 
+  if (!Number.isInteger(taskNumber) || index < 0 || index >= tasks.length) {
+    console.log("Error: Invalid task number.");
+    return;
+  }
+ 
+  const removed = tasks[index];
+  tasks.splice(index, 1);
+  console.log(`Task "${removed}" has been removed.`);
+}
+ 
+// -----------------------------------------------------------------------------
+// Main menu loop
+// -----------------------------------------------------------------------------
+ 
+function main() {
+  let running = true;
+ 
+  while (running) {
+    printMenu();
+    const choice = readlineSync.question("Enter your choice (1-4): ").trim();
+ 
+    if (choice === "1") {
+      addTask();
+    } else if (choice === "2") {
+      viewTasks();
+    } else if (choice === "3") {
+      deleteTask();
+    } else if (choice === "4") {
+      console.log("Goodbye!");
+      running = false;
+    } else {
+      console.log("Error: Please enter a number between 1 and 4.");
+    }
+  }
+}
+ 
+main();
