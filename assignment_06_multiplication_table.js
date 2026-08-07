@@ -60,3 +60,64 @@
 // =============================================================================
 
 
+/ -----------------------------------------------------------------------------
+// Part A — Single table
+// -----------------------------------------------------------------------------
+ 
+// Prints the multiplication table for `num` from 1 to 12.
+function printTable(num) {
+  console.log(`Multiplication Table for ${num}:`);
+ 
+  for (let i = 1; i <= 12; i++) {
+    const product = num * i;
+    console.log(`${num}  x  ${String(i).padEnd(2)}  =  ${product}`);
+  }
+}
+ 
+// -----------------------------------------------------------------------------
+// Part B — Tables from 1 to N
+// -----------------------------------------------------------------------------
+ 
+// Prints multiplication tables for every number from 1 to n, separated by a line.
+function printTablesUpTo(n) {
+  for (let num = 1; num <= n; num++) {
+    printTable(num);
+ 
+    if (num < n) {
+      console.log("---------------------------");
+    }
+  }
+}
+ 
+// -----------------------------------------------------------------------------
+// Main
+// -----------------------------------------------------------------------------
+ 
+function runSingleTable() {
+  const num = Number(readlineSync.question("Enter a number: "));
+ 
+  if (!Number.isInteger(num) || num <= 0) {
+    console.log("Error: Number must be a positive integer.");
+    return;
+  }
+ 
+  printTable(num);
+}
+ 
+function runTablesUpToN() {
+  const n = Number(readlineSync.question("\nEnter a number (N) for tables 1 to N: "));
+ 
+  if (!Number.isInteger(n) || n <= 0) {
+    console.log("Error: N must be a positive integer.");
+    return;
+  }
+ 
+  printTablesUpTo(n);
+}
+ 
+function main() {
+  runSingleTable();
+  runTablesUpToN();
+}
+ 
+main();
