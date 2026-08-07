@@ -55,3 +55,85 @@
 // =============================================================================
 
 
+
+ 
+// -----------------------------------------------------------------------------
+// Part A — Print the first N terms
+// -----------------------------------------------------------------------------
+ 
+// Returns an array containing the first n Fibonacci numbers.
+function generateFibonacci(n) {
+  const sequence = [];
+  let a = 0;
+  let b = 1;
+ 
+  for (let i = 0; i < n; i++) {
+    sequence.push(a);
+    const next = a + b;
+    a = b;
+    b = next;
+  }
+ 
+  return sequence;
+}
+ 
+function printFirstNTerms() {
+  const n = Number(readlineSync.question("How many terms? "));
+ 
+  if (!Number.isInteger(n) || n <= 0) {
+    console.log("Error: N must be a positive integer.");
+    return;
+  }
+ 
+  const sequence = generateFibonacci(n);
+  console.log("Fibonacci sequence: " + sequence.join(" "));
+}
+ 
+// -----------------------------------------------------------------------------
+// Part B — Check if a number is a Fibonacci number
+// -----------------------------------------------------------------------------
+ 
+// Determines whether n is a Fibonacci number by generating terms up to n.
+function isFibonacci(n) {
+  if (n < 0) {
+    return false;
+  }
+ 
+  let a = 0;
+  let b = 1;
+ 
+  while (a < n) {
+    const next = a + b;
+    a = b;
+    b = next;
+  }
+ 
+  return a === n;
+}
+ 
+function checkNumber() {
+  const num = Number(readlineSync.question("Enter a number to check: "));
+ 
+  if (!Number.isInteger(num)) {
+    console.log("Error: Please enter a valid whole number.");
+    return;
+  }
+ 
+  if (isFibonacci(num)) {
+    console.log(`${num} is a Fibonacci number.`);
+  } else {
+    console.log(`${num} is NOT a Fibonacci number.`);
+  }
+}
+ 
+// -----------------------------------------------------------------------------
+// Main
+// -----------------------------------------------------------------------------
+ 
+function main() {
+  printFirstNTerms();
+  checkNumber();
+}
+ 
+main();
+ 
